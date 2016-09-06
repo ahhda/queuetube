@@ -100,16 +100,16 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   };
   var results = [];
   var upcoming = [
-    {id: 'kRJuY6ZDLPo', title: 'La Roux - In for the Kill (Twelves Remix)'},
-    {id: '45YSGFctLws', title: 'Shout Out Louds - Illusions'},
-    {id: 'ktoaj1IpTbw', title: 'CHVRCHES - Gun'},
-    {id: '8Zh0tY2NfLs', title: 'N.E.R.D. ft. Nelly Furtado - Hot N\' Fun (Boys Noize Remix) HQ'},
+    
+    {id: 'BPNTC7uZYrI', title: 'Coldplay - Up&Up (Official video)'},
+    {id: 'jGflUbPQfW8', title: 'OMI - Cheerleader (Felix Jaehn Remix) [Official Video]'},
+    {id: 'bx1Bh8ZvH84', title: 'Oasis - Wonderwall'},
     {id: 'zwJPcRtbzDk', title: 'Daft Punk - Human After All (SebastiAn Remix)'},
     {id: 'sEwM6ERq0gc', title: 'HAIM - Forever (Official Music Video)'},
     {id: 'fTK4XTvZWmk', title: 'Housse De Racket â˜â˜€â˜ Apocalypso'}
   ];
   var history = [
-    {id: 'XKa7Ywiv734', title: '[OFFICIAL HD] Daft Punk - Give Life Back To Music (feat. Nile Rodgers)'}
+    {id: 'PT2_F-1esPk', title: 'The Chainsmokers - Closer (Lyric) ft. Halsey'}
   ];
 
   $window.onYouTubeIframeAPIReady = function () {
