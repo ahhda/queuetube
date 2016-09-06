@@ -17,10 +17,11 @@ h1 strong, #playlist, .video-title{ font-family: 'Montserrat', Arial, sans-serif
 
 header{ background: #df1f1f; color: white; height: 40px; padding: 20px 0;}
 h1{ float: left; line-height: 40px; text-align: center; width: 160px;}
-#search{ float: left; height: 40px; position: relative; width: 880px;}
-#query{ background: #ac0809; border: none; border-radius: 20px; color: white; float: left; height: 30px; line-height: 30px; padding: 5px 20px; width: 840px;}
+#search{ float: left; height: 40px; position: relative; width: 480px;}
+#query{ background: #ac0809; border: none; border-radius: 20px; color: white; float: left; height: 30px; line-height: 30px; padding: 5px 20px; width: 440px;}
 #query:focus{ outline: none;}
 #submit{ position: absolute; right: 10px; top: 5px;}
+#searchTerm{ position: absolute; float: left; right: -150px; padding: 10px 20px;}
 nav{ float: right; line-height: 40px; text-align: center; width: 240px;}
 #play, #pause{ cursor: pointer;}
 #pause{ display: none;}
