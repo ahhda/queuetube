@@ -128,6 +128,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     youtube.player.cueVideoById(history[0].id);
     youtube.videoId = history[0].id;
     youtube.videoTitle = history[0].title;
+    event.target.playVideo();
   }
 
   function onYoutubeStateChange (event) {
