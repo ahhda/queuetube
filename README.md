@@ -3,7 +3,7 @@ QueueTube
 
 A YouTube powered real-time music player built with AngularJS.
 
-[![QueueTube screenshot](https://raw.github.com/ahhda/queuetube/master/screen.png)](http://geekinsideyou.com/queuetube/)
+[![QueueTube screenshot](https://raw.githubusercontent.com/ahhda/queuetube/master/screen.png)](http://geekinsideyou.com/queuetube/)
 
 ## Demo
 
