@@ -51,6 +51,10 @@ yt.www.suggest.handleResponse = function(suggestions) {
   } else {
     var searchTerm = null;
   }
+  console.log("Yo!!");
+  document.getElementById('play').innerHTML = searchTerm;
+  searchtermdisplay = keyword;
+  //$rootScope.$apply();
   if (!searchTerm) {
     searchTerm = keyword;
   }
@@ -98,6 +102,9 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     playerWidth: '640',
     state: 'stopped'
   };
+
+  var searchtermdisplay = 'hello';
+
   var results = [];
   var upcoming = [
     {id: 'PT2_F-1esPk', title: 'The Chainsmokers - Closer (Lyric) ft. Halsey'},
