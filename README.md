@@ -27,4 +27,5 @@ A YouTube powered real-time music player built with AngularJS.
 ## Credits
 
 [Jeremy Thomas](https://github.com/jgthms) for the [design](https://github.com/jgthms/juketube).
+
 [Feross Aboukhadijeh](https://github.com/feross) for [instant search](https://github.com/feross/youtube-instant).
