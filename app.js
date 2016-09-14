@@ -100,7 +100,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   };
   var results = [];
   var upcoming = [
-    
+    {id: 'PT2_F-1esPk', title: 'The Chainsmokers - Closer (Lyric) ft. Halsey'},
     {id: 'BPNTC7uZYrI', title: 'Coldplay - Up&Up (Official video)'},
     {id: 'jGflUbPQfW8', title: 'OMI - Cheerleader (Felix Jaehn Remix) [Official Video]'},
     {id: 'bx1Bh8ZvH84', title: 'Oasis - Wonderwall'},
@@ -109,7 +109,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     {id: 'fTK4XTvZWmk', title: 'Housse De Racket â˜â˜€â˜ Apocalypso'}
   ];
   var history = [
-    {id: 'PT2_F-1esPk', title: 'The Chainsmokers - Closer (Lyric) ft. Halsey'}
+    
   ];
 
   $window.onYouTubeIframeAPIReady = function () {
@@ -125,10 +125,15 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
   function onYoutubeReady (event) {
     $log.info('YouTube Player is ready');
-    youtube.player.cueVideoById(history[0].id);
-    youtube.videoId = history[0].id;
-    youtube.videoTitle = history[0].title;
-    event.target.playVideo();
+    var randomNumber = Math.floor(Math.random() * upcoming.length);
+    // youtube.player.cueVideoById(history[0].id);
+    // youtube.videoId = history[0].id;
+    // youtube.videoTitle = history[0].title;
+    var firstVideo = upcoming[randomNumber];
+    service.launchPlayer(firstVideo.id, firstVideo.title);
+    service.archiveVideo(firstVideo.id, firstVideo.title);
+    service.deleteVideo('upcoming', firstVideo.id);
+    //event.target.playVideo();
   }
 
   function onYoutubeStateChange (event) {
