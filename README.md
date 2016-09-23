@@ -20,7 +20,7 @@ A YouTube powered real-time music player built with AngularJS.
 
 ## Further work
 
-~~* To implement drag and drop capabilities~~
+* ~~To implement drag and drop capabilities~~
 * Share playlist feature
 * Keyboard shortcuts for play, pause etc.
 
