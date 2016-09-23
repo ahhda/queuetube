@@ -1,7 +1,7 @@
 var app = angular.module('QueueTube', []);
 
 function onKeyDown(e) {
-  console.log("In instant search");
+  //console.log("In instant search");
 }
 
 function onBodyLoad() {
@@ -16,7 +16,7 @@ function onBodyLoad() {
 }
 
 function doInstantSearch() {
-  console.log("In instant search");
+  //console.log("In instant search");
   if (xhrWorking) {
     pendingSearch = true;
     return;
@@ -43,15 +43,15 @@ yt.www = {};
 yt.www.suggest = {};
 
 yt.www.suggest.handleResponse = function(suggestions) {
-  console.log("Suggestions are:");
-  console.log(suggestions);
+  //console.log("Suggestions are:");
+  //console.log(suggestions);
   
   if (suggestions[1][0]) {
     var searchTerm = suggestions[1][0][0];
   } else {
     var searchTerm = null;
   }
-  console.log("Yo!!");
+  //console.log("Yo!!");
   document.getElementById('play').innerHTML = searchTerm;
   searchtermdisplay = keyword;
   //$rootScope.$apply();
@@ -141,6 +141,14 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     service.archiveVideo(firstVideo.id, firstVideo.title);
     service.deleteVideo('upcoming', firstVideo.id);
     //event.target.playVideo();
+    var el = document.getElementById('upcoming');
+    var sortable = Sortable.create(el, {onEnd: function (/**Event*/evt) {
+        //upcoming[evt.oldIndex]
+        upcoming.splice(evt.newIndex, 0, upcoming.splice(evt.oldIndex, 1)[0]);
+        //console.log(evt.oldIndex);  // element's old index within parent
+        //console.log(evt.newIndex);  // element's new index within parent
+        
+    }});
   }
 
   function onYoutubeStateChange (event) {
@@ -231,9 +239,9 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     else{
       list = history;
     }
-    console.log("deleting " + list);
+    //console.log("deleting " + list);
     for (var i = list.length - 1; i >= 0; i--) {
-      console.log(list[i].id);
+      //console.log(list[i].id);
       if (list[i].id === id) {
         list.splice(i, 1);
         break;
@@ -308,12 +316,12 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
     };
 
     $scope.delete = function (list, id) {
-      console.log("in delete with " + list +  " " + id);
+      //console.log("in delete with " + list +  " " + id);
       VideosService.deleteVideo(list, id);
     };
 
     $scope.changed = function (event) {
-      console.log("haha");
+      //console.log("haha");
     };
 
     $scope.search = function (keyword) {
