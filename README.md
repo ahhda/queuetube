@@ -15,7 +15,7 @@ A YouTube powered real-time music player built with AngularJS.
 * Autocomplete
 * Single page app
 * Ajax search
-* Playlists (upcoming and archived videos)
+* Playlists (upcoming and archived videos) with drag and drop capabilities
 * Automatic play (as soon as the current video ends)
 
 ## Further work
