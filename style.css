@@ -26,7 +26,7 @@ nav{ float: right; line-height: 40px; text-align: center; width: 340px;}
 #play, #pause{ cursor: pointer;}
 #pause{ display: none;}
 
-#results{ background: #f2f5fd; background: #f5f5f5; height: 944px; overflow-x: hidden; width: 640px;}
+#results{ background: #f2f5fd; height: 944px; overflow-x: hidden; width: 640px;}
 .video{ cursor: pointer; min-height: 90px; padding: 10px; padding-left: 140px; position: relative;}
 .video:nth-child(2n-1){ background: white;}
 .video-image{ float: left; left: 10px; position: absolute; top: 10px;}
