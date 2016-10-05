@@ -9,7 +9,7 @@ q: before, q: after{ content: '';}
 abbr, acronym{ border: 0;}
 
 html{ background: #eee url(shattered.png) repeat top center;}
-body{ margin: 0 auto 100px; position: relative; width: 1280px;}
+body{ margin: 0 auto; position: relative; max-width: 1280px;}
 a{ cursor: pointer;}
 
 body, input{ font: 20px/1 'Montserrat', Arial, sans-serif;}
