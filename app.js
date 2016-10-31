@@ -1,5 +1,7 @@
 var app = angular.module('QueueTube', []);
 
+//Mousetrap.bind('up', function() { console.log('up'); ; });
+
 function onKeyDown(e) {
   //console.log("In instant search");
 }
@@ -223,7 +225,13 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     });
     return upcoming;
   };
-
+  this.deleteFromResult = function (id) {
+  	  for( var i - 0; i <= results.items.length.length - 1; i++)
+  	  {
+  	  	if(results.id == id)
+  	  		results.splice(i,1);
+  	  }
+  }
   this.archiveVideo = function (id, title) {
     history.unshift({
       id: id,
@@ -311,6 +319,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
 
     $scope.queue = function (id, title) {
       VideosService.queueVideo(id, title);
+      VideosService.deleteFromResult(id);
       VideosService.deleteVideo('history', id);
       $log.info('Queued id:' + id + ' and title:' + title);
     };
