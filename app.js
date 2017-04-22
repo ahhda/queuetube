@@ -1,5 +1,48 @@
 var app = angular.module('QueueTube', []);
 
+Ladda.bind( 'button', {
+   callback: function( instance ) {
+      setTimeout(function() {
+          instance.stop();
+      },6000)
+      var videos = angular.element(document.getElementById('query')).scope().upcoming;
+      var history = angular.element(document.getElementById('query')).scope().history;
+      if(history.length >= 1){
+        videos.unshift(history[0]);
+      }
+      var apiUrl = "https://z3ahb3w7kb.execute-api.us-east-1.amazonaws.com/dev/queuetube";
+      var saveData = $.ajax({
+            type: 'POST',
+            url: apiUrl,
+            data: JSON.stringify(videos),
+            dataType: "json",
+            headers: { 'MY_CUSTOM_HEADER': 'MY_CUSTOM_HEADER_VALUE' },
+            success: function(resultData) {
+              instance.stop();
+              console.log(resultData.playlistURL);
+              var finalURL = window.location.href.split('#')[0]+"#"+resultData.playlistURL;
+              vex.dialog.open({
+                  message: 'Share your playlist using the below link:',
+                  input: [
+                      '<input name="url" type="text" placeholder="URL" value="'+finalURL+'"/>',
+                  ].join(''),
+                  buttons: [
+                      $.extend({}, vex.dialog.buttons.NO, { text: 'Back' })
+                  ],
+                  callback: function (data) {
+                      if (!data) {
+                          console.log('Cancelled')
+                      } else {
+                          // console.log('Username', data.username, 'Password', data.password)
+                      }
+                  }
+              })
+            }
+      });
+      saveData.error(function() { alert("Something went wrong"); });
+   }
+});
+
 function onKeyDown(e) {
   //console.log("In instant search");
 }
@@ -124,6 +167,9 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   ];
 
   $window.onYouTubeIframeAPIReady = function () {
+    for (var i = 0; i <= upcoming.length - 1; i++) {
+      console.log(upcoming[i].title);
+    }
     $log.info('Youtube API is ready');
     var searchBox = $("#query");
     searchBox.keyup(doInstantSearch);
@@ -132,27 +178,63 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     service.bindPlayer('placeholder');
     service.loadPlayer();
     $rootScope.$apply();
+    
   };
 
   function onYoutubeReady (event) {
     $log.info('YouTube Player is ready');
-    var randomNumber = Math.floor(Math.random() * upcoming.length);
-    // youtube.player.cueVideoById(history[0].id);
-    // youtube.videoId = history[0].id;
-    // youtube.videoTitle = history[0].title;
-    var firstVideo = upcoming[randomNumber];
-    service.launchPlayer(firstVideo.id, firstVideo.title);
-    service.archiveVideo(firstVideo.id, firstVideo.title);
-    service.deleteVideo('upcoming', firstVideo.id);
-    //event.target.playVideo();
-    var el = document.getElementById('upcoming');
-    var sortable = Sortable.create(el, {onEnd: function (/**Event*/evt) {
-        //upcoming[evt.oldIndex]
-        upcoming.splice(evt.newIndex, 0, upcoming.splice(evt.oldIndex, 1)[0]);
-        //console.log(evt.oldIndex);  // element's old index within parent
-        //console.log(evt.newIndex);  // element's new index within parent
-        
-    }});
+    if (window.location.hash) {
+      var searchTerm = decodeURIComponent(window.location.hash.substring(1));
+      console.log("SEARCH TERM "+searchTerm);
+      var apiUrl = "https://z3ahb3w7kb.execute-api.us-east-1.amazonaws.com/dev/queuetube";
+      $.ajax({
+        url: apiUrl,
+        type: "get", //send it through get method
+        data: { 
+          playlistURL: searchTerm,
+        },
+        success: function(response) {
+          var newupcoming = JSON.parse(response[0].playlist);
+          console.log("NEW");
+          // console.log(newupcoming);
+          var oldupcoming = service.getUpcoming().slice();
+          console.log("OLD");
+          console.log(oldupcoming.length);
+          for (var i = 0; i <= oldupcoming.length - 1; i++) {
+            console.log("Deleting ", oldupcoming[i].title);
+            service.deleteVideo('upcoming', oldupcoming[i].id);
+          }
+          // if(newupcoming.length >= 1){
+          //   console.log("Playing ", newupcoming[0].title);
+          //   service.launchPlayer(newupcoming[0].id, newupcoming[0].title);
+          //   service.archiveVideo(newupcoming[0].id, newupcoming[0].title);
+          //   // service.deleteVideo('upcoming', firstVideo.id);
+          // }
+          for (var i = 1; i <= newupcoming.length - 1; i++) {
+            console.log("Queueing ", newupcoming[i].title);
+            service.queueVideo(newupcoming[i].id, newupcoming[i].title);
+          }
+          service.launchPlayer(newupcoming[0].id, newupcoming[0].title);
+          service.archiveVideo(newupcoming[0].id, newupcoming[0].title);
+          // service.deleteVideo('upcoming', newupcoming[0].id);
+        },
+        error: function(xhr) {
+          alert("No playlist found");
+        }
+      });
+    }
+    else{
+      var randomNumber = Math.floor(Math.random() * upcoming.length);
+      var firstVideo = upcoming[randomNumber];
+      service.launchPlayer(firstVideo.id, firstVideo.title);
+      service.archiveVideo(firstVideo.id, firstVideo.title);
+      service.deleteVideo('upcoming', firstVideo.id);
+      //event.target.playVideo();
+      var el = document.getElementById('upcoming');
+      var sortable = Sortable.create(el, {onEnd: function (/**Event*/evt) {
+          upcoming.splice(evt.newIndex, 0, upcoming.splice(evt.oldIndex, 1)[0]);
+      }});
+    }
   }
 
   function onYoutubeStateChange (event) {
@@ -200,6 +282,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   };
 
   this.launchPlayer = function (id, title) {
+    console.log("LAUNCH PLAYER");
+    console.log(id);
     youtube.player.loadVideoById(id);
     youtube.videoId = id;
     youtube.videoTitle = title;
@@ -243,7 +327,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     else{
       list = history;
     }
-    //console.log("deleting " + list);
+    console.log("deleting list");
+    // console.log(list);
     for (var i = list.length - 1; i >= 0; i--) {
       //console.log(list[i].id);
       if (list[i].id === id) {
@@ -263,6 +348,10 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
   this.getUpcoming = function () {
     return upcoming;
+  };
+
+  this.setUpcoming = function (newupcoming) {
+    upcoming = newupcoming;
   };
 
   this.getHistory = function () {
