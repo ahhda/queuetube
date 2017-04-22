@@ -1,7 +1,7 @@
 QueueTube
 ========
 
-A YouTube powered real-time music player built with AngularJS.
+A YouTube powered music player with instant search, automatic play, playlist share and drag and drop capabilities built with AngularJS.
 
 [![QueueTube view](queuetube6.gif)](http://geekinsideyou.com/queuetube/)
 
@@ -21,7 +21,7 @@ A YouTube powered real-time music player built with AngularJS.
 ## Further work
 
 * ~~To implement drag and drop capabilities~~
-* Share playlist feature
+* ~~Share playlist feature~~
 * Keyboard shortcuts for play, pause etc.
 
 ## Credits
