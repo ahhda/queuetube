@@ -154,13 +154,12 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
   var results = [];
   var upcoming = [
+    {id: 'JGwWNGJdvx8', title: 'Ed Sheeran - Shape of You [Official Video]'},
+    {id: 'OPf0YbXqDm0', title: 'Mark Ronson - Uptown Funk ft. Bruno Mars'},
     {id: 'bpOSxM0rNPM', title: 'Arctic Monkeys - Do I Wanna Know? (Official Video)'},
     {id: 'D5drYkLiLI8', title: "Kygo, Selena Gomez - It Ain't Me (with Selena Gomez) (Audio)"},
-    {id: 'BPNTC7uZYrI', title: 'Coldplay - Up&Up (Official video)'},
     {id: 'DpMfP6qUSBo', title: 'Marian Hill - Down'},
     {id: 'DQ2AJlN_ksc', title: 'Jai Wolf - Indian Summer'},
-    {id: 'OPf0YbXqDm0', title: 'Mark Ronson - Uptown Funk ft. Bruno Mars'},
-    {id: 'JGwWNGJdvx8', title: 'Ed Sheeran - Shape of You [Official Video]'}
   ];
   var history = [
     
