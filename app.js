@@ -47,6 +47,30 @@ function onKeyDown(e) {
   //console.log("In instant search");
 }
 
+function openAbout() {
+  vex.dialog.open({
+      message: 'QueueTube is a YouTube powered music player',
+      input: [
+          '<p>Features:</p>',
+          '<li>Autocomplete Instant search</li>',
+          '<li>Playlists (upcoming and archived videos)</li>',
+          '<li>Automatic play</li>',
+          '<li>Playlist sharing</li>', 
+          '<li>Drag and drop playlist reordering</li>'
+      ].join(''),
+      buttons: [
+          $.extend({}, vex.dialog.buttons.NO, { text: 'Back' })
+      ],
+      callback: function (data) {
+          if (!data) {
+              console.log('Cancelled')
+          } else {
+              // console.log('Username', data.username, 'Password', data.password)
+          }
+      }
+  })
+}
+
 function onBodyLoad() {
   currentSearch = "";
   currentSuggestion = "";
