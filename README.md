@@ -7,7 +7,7 @@ A YouTube powered music player with instant search, automatic play, playlist sha
 
 ## Demo
 
-[geekinsideyou.com/queuetube/](http://queuetube.in/)
+[queuetube.in/](http://queuetube.in/)
 
 ## Features
 
