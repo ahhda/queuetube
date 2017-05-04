@@ -3,11 +3,11 @@ QueueTube
 
 A YouTube powered music player with instant search, automatic play, playlist share and drag and drop capabilities built with AngularJS.
 
-[![QueueTube view](queuetube6.gif)](http://geekinsideyou.com/queuetube/)
+[![QueueTube view](queuetube6.gif)](http://queuetube.in/)
 
 ## Demo
 
-[geekinsideyou.com/queuetube/](http://geekinsideyou.com/queuetube/)
+[geekinsideyou.com/queuetube/](http://queuetube.in/)
 
 ## Features
 
