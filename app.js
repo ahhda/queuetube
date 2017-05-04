@@ -215,6 +215,10 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
           }
           service.launchPlayer(newupcoming[0].id, newupcoming[0].title);
           service.archiveVideo(newupcoming[0].id, newupcoming[0].title);
+          var el = document.getElementById('upcoming');
+          var sortable = Sortable.create(el, {onEnd: function (/**Event*/evt) {
+              upcoming.splice(evt.newIndex, 0, upcoming.splice(evt.oldIndex, 1)[0]);
+          }});
           // service.deleteVideo('upcoming', newupcoming[0].id);
         },
         error: function(xhr) {
