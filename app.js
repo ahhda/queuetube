@@ -178,12 +178,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
   var results = [];
   var upcoming = [
-    {id: 'JGwWNGJdvx8', title: 'Ed Sheeran - Shape of You [Official Video]'},
-    {id: 'OPf0YbXqDm0', title: 'Mark Ronson - Uptown Funk ft. Bruno Mars'},
     {id: 'bpOSxM0rNPM', title: 'Arctic Monkeys - Do I Wanna Know? (Official Video)'},
-    {id: 'D5drYkLiLI8', title: "Kygo, Selena Gomez - It Ain't Me (with Selena Gomez) (Audio)"},
-    {id: 'DpMfP6qUSBo', title: 'Marian Hill - Down'},
-    {id: 'DQ2AJlN_ksc', title: 'Jai Wolf - Indian Summer'},
+    {id: 'DQ2AJlN_ksc', title: 'Jai Wolf - Indian Summer'}
   ];
   var history = [
     
@@ -278,6 +274,11 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     $rootScope.$apply();
   }
 
+  function onPlayerError (event) {
+    console.log("ERROR OCCURED " + event.data);
+    console.log(event);
+  }
+
   this.bindPlayer = function (elementId) {
     $log.info('Binding to ' + elementId);
     youtube.playerId = elementId;
@@ -294,7 +295,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
       },
       events: {
         'onReady': onYoutubeReady,
-        'onStateChange': onYoutubeStateChange
+        'onStateChange': onYoutubeStateChange,
+        'onError': onPlayerError
       }
     });
   };
