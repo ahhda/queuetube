@@ -10,17 +10,16 @@ Ladda.bind( 'button', {
       if(history.length >= 1){
         videos.unshift(history[0]);
       }
-      var apiUrl = "https://z3ahb3w7kb.execute-api.us-east-1.amazonaws.com/dev/queuetube";
+      var apiUrl = "https://us-central1-intuitive-bot.cloudfunctions.net/mysql_demo";
+      postData = {"data": videos};
       var saveData = $.ajax({
             type: 'POST',
             url: apiUrl,
-            data: JSON.stringify(videos),
+            data: JSON.stringify(postData),
             dataType: "json",
-            headers: { 'MY_CUSTOM_HEADER': 'MY_CUSTOM_HEADER_VALUE' },
             success: function(resultData) {
               instance.stop();
-              console.log(resultData.playlistURL);
-              var finalURL = window.location.href.split('#')[0]+"#"+resultData.playlistURL;
+              var finalURL = window.location.href.split('#')[0]+"#"+resultData.playlistUrl;
               vex.dialog.open({
                   message: 'Share your playlist using the below link:',
                   input: [
@@ -31,9 +30,7 @@ Ladda.bind( 'button', {
                   ],
                   callback: function (data) {
                       if (!data) {
-                          console.log('Cancelled')
                       } else {
-                          // console.log('Username', data.username, 'Password', data.password)
                       }
                   }
               })
@@ -186,9 +183,6 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   ];
 
   $window.onYouTubeIframeAPIReady = function () {
-    for (var i = 0; i <= upcoming.length - 1; i++) {
-      console.log(upcoming[i].title);
-    }
     $log.info('Youtube API is ready');
     var searchBox = $("#query");
     searchBox.keyup(doInstantSearch);
@@ -204,33 +198,20 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     $log.info('YouTube Player is ready');
     if (window.location.hash) {
       var searchTerm = decodeURIComponent(window.location.hash.substring(1));
-      console.log("SEARCH TERM "+searchTerm);
-      var apiUrl = "https://z3ahb3w7kb.execute-api.us-east-1.amazonaws.com/dev/queuetube";
+      var apiUrl = "https://us-central1-intuitive-bot.cloudfunctions.net/mysql_demo";
       $.ajax({
         url: apiUrl,
         type: "get", //send it through get method
         data: { 
-          playlistURL: searchTerm,
+          playlistUrl: searchTerm,
         },
         success: function(response) {
-          var newupcoming = JSON.parse(response[0].playlist);
-          console.log("NEW");
-          // console.log(newupcoming);
+          var newupcoming = JSON.parse(response.playlist.replace(/'/g, '"'));
           var oldupcoming = service.getUpcoming().slice();
-          console.log("OLD");
-          console.log(oldupcoming.length);
           for (var i = 0; i <= oldupcoming.length - 1; i++) {
-            console.log("Deleting ", oldupcoming[i].title);
             service.deleteVideo('upcoming', oldupcoming[i].id);
           }
-          // if(newupcoming.length >= 1){
-          //   console.log("Playing ", newupcoming[0].title);
-          //   service.launchPlayer(newupcoming[0].id, newupcoming[0].title);
-          //   service.archiveVideo(newupcoming[0].id, newupcoming[0].title);
-          //   // service.deleteVideo('upcoming', firstVideo.id);
-          // }
           for (var i = 1; i <= newupcoming.length - 1; i++) {
-            console.log("Queueing ", newupcoming[i].title);
             service.queueVideo(newupcoming[i].id, newupcoming[i].title);
           }
           service.launchPlayer(newupcoming[0].id, newupcoming[0].title);
@@ -275,8 +256,6 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   }
 
   function onPlayerError (event) {
-    console.log("ERROR OCCURED " + event.data);
-    console.log(event);
   }
 
   this.bindPlayer = function (elementId) {
@@ -311,8 +290,6 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   };
 
   this.launchPlayer = function (id, title) {
-    console.log("LAUNCH PLAYER");
-    console.log(id);
     youtube.player.loadVideoById(id);
     youtube.videoId = id;
     youtube.videoTitle = title;
@@ -356,10 +333,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     else{
       list = history;
     }
-    console.log("deleting list");
-    // console.log(list);
     for (var i = list.length - 1; i >= 0; i--) {
-      //console.log(list[i].id);
       if (list[i].id === id) {
         list.splice(i, 1);
         break;
