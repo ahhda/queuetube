@@ -12,6 +12,7 @@ Ladda.bind( 'button', {
       }
       var apiUrl = "https://us-central1-intuitive-bot.cloudfunctions.net/mysql_demo";
       postData = {"data": videos};
+      console.log(postData);
       var saveData = $.ajax({
             type: 'POST',
             url: apiUrl,
@@ -206,7 +207,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
           playlistUrl: searchTerm,
         },
         success: function(response) {
-          var newupcoming = JSON.parse(response.playlist.replace(/'/g, '"'));
+          console.log(response.playlist);
+          var newupcoming = JSON.parse(response.playlist);
           var oldupcoming = service.getUpcoming().slice();
           for (var i = 0; i <= oldupcoming.length - 1; i++) {
             service.deleteVideo('upcoming', oldupcoming[i].id);
